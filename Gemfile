@@ -58,6 +58,6 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'dotenv-rails'
 gem "factory_girl_rails", "~> 4.0"
-gem "saml-kit", path: "../saml-kit"
+gem "saml-kit", "~> 0.2.0"
 gem "rails-assets-bootstrap", source: "https://rails-assets.org"
 gem "rails-assets-jquery", source: "https://rails-assets.org"
