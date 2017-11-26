@@ -42,6 +42,7 @@ group :development, :test do
   gem 'webmock'
   gem 'rails-controller-testing'
   gem 'sqlite3'
+  gem "factory_girl_rails", "~> 4.0"
 end
 
 group :development do
@@ -60,7 +61,6 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'dotenv-rails'
-gem "factory_girl_rails", "~> 4.0"
 gem "saml-kit", "~> 0.2.0"
 gem "rails-assets-bootstrap", source: "https://rails-assets.org"
 gem "rails-assets-jquery", source: "https://rails-assets.org"
