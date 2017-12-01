@@ -7,12 +7,12 @@ class SessionsController < ApplicationController
     if :http_redirect == params[:binding].to_sym
       @uri, @saml_params = idp.login_request_for(binding: :http_redirect, relay_state: relay_state) do |builder|
         @saml_builder = builder
-        builder.acs_url = Sp.default(request).assertion_consumer_service_for(binding: :http_post).location
+        builder.assertion_consumer_service_url = Sp.default(request).assertion_consumer_service_for(binding: :http_post).location
       end
     else
       @uri, @saml_params = idp.login_request_for(binding: :http_post, relay_state: relay_state) do |builder|
         @saml_builder = builder
-        builder.acs_url = Sp.default(request).assertion_consumer_service_for(binding: :http_post).location
+        builder.assertion_consumer_service_url = Sp.default(request).assertion_consumer_service_for(binding: :http_post).location
       end
     end
   end
