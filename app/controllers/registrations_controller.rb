@@ -12,6 +12,6 @@ class RegistrationsController < ApplicationController
   end
 
   def create
-    Saml::Kit.configuration.registry.register_url(params[:url], verify_ssl: Rails.env.production?)
+    Saml::Kit.registry.register_url(params[:url], verify_ssl: Rails.env.production?)
   end
 end
