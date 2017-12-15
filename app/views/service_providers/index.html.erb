@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>Service Providers</h1>
+      <%= link_to "new", new_service_provider_path %>
+
+      <table class="table">
+        <thead>
+          <th></th>
+          <th>Entity Id</th>
+        </thead>
+        <tbody>
+        <% @service_providers.each do |service_provider| %>
+          <tr>
+            <td><%= button_to "delete", service_provider_path(service_provider), method: :delete %></td>
+            <td><%= link_to service_provider.entity_id, service_provider.entity_id %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -11,4 +11,12 @@
   <body>
     <%= yield %>
   </body>
+  <footer>
+    <div class="container">
+      <div class="row">
+        <%= link_to "Identity Providers", identity_providers_path %> |
+        <%= link_to "Service Providers", service_providers_path %>
+      </div>
+    </div>
+  </footer>
 </html>

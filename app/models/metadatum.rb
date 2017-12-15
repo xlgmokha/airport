@@ -1,6 +1,9 @@
 class Metadatum < ApplicationRecord
+  scope :service_providers, -> { where('metadata like ?', '%SPSSODescriptor%') }
+  scope :identity_providers, -> { where('metadata like ?', '%IDPSSODescriptor%') }
+
   def to_xml
-    to_saml.to_xml
+    metadata
   end
 
   def to_saml

@@ -1,6 +1,6 @@
 class IdentityProvidersController < ApplicationController
   def index
-    @metadatum = Metadatum.all.limit(10)
+    @metadatum = Metadatum.identity_providers.limit(10)
   end
 
   def show

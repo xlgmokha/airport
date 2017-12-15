@@ -1,13 +1,13 @@
 <div class="container">
   <div class="row">
     <div class="col">
+      <h1>Identity Providers</h1>
       <%= link_to "register", new_identity_provider_path %>
       <table class="table">
         <thead>
           <tr>
             <th></th>
             <th>Entity Id</th>
-            <th>Url</th>
             <th>Login</th>
             <th>Logout</th>
           </tr>
@@ -32,7 +32,6 @@
                   <% end if current_user?(metadata.entity_id) %>
                 </ul>
               </td>
-              <td><%= metadata.url %></td>
               <td>
                 <% metadata.to_saml.single_sign_on_services.each do |service| %>
                   <%= form_with url: session_path, data: { remote: false } do |form| %>
