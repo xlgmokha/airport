@@ -1,4 +1,4 @@
-class RegistrationsController < ApplicationController
+class IdentityProvidersController < ApplicationController
   def index
     @metadatum = Metadatum.all.limit(10)
   end

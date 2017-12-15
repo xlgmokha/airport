@@ -3,7 +3,7 @@
     <div class="col">
       <h1>Register an Identity Provider</h1>
 
-      <%= form_with url: registrations_path do |form| %>
+      <%= form_with url: identity_providers_path do |form| %>
         <%= form.label :url %>
         <%= form.url_field :url, required: true %>
         <%= form.submit %>

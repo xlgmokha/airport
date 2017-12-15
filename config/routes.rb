@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   post "/assertions/consume" => "assertions#create", as: :consume
   post "/assertions/logout" => "assertions#destroy", as: :logout
   resource :metadata, only: [:show]
-  resources :registrations, only: [:index, :show, :new, :create]
-  root to: "registrations#index"
+  resources :identity_providers, only: [:index, :show, :new, :create]
+  root to: "identity_providers#index"
 end

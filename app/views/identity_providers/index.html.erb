@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <%= link_to "register", new_registration_path %>
+      <%= link_to "register", new_identity_provider_path %>
       <table class="table">
         <thead>
           <tr>
@@ -14,7 +14,7 @@
           <% @metadatum.each do |metadata| %>
             <tr>
               <td>
-                <%= link_to metadata.entity_id, registration_path(metadata) %>
+                <%= link_to metadata.entity_id, identity_provider_path(metadata) %>
                 <ul>
                   <% current_user(metadata.entity_id).attributes.each do |attribute| %>
                     <li title="<%= attribute[1] %>"> <%= attribute[0] %> <%= attribute[1].truncate(100) %> </li>
