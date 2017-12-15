@@ -4,13 +4,13 @@ class Metadatum < ApplicationRecord
   end
 
   def to_saml
-    Saml::Kit::IdentityProviderMetadata.new(metadata)
+    Saml::Kit::Metadata.from(metadata)
   end
 
   class << self
     def register_url(url, verify_ssl: true)
       content = Saml::Kit::DefaultRegistry::HttpApi.new(url, verify_ssl: verify_ssl).get
-      register(Saml::Kit::IdentityProviderMetadata.new(content), url: url)
+      register(Saml::Kit::Metadata.from(content), url: url)
     end
 
     def register(metadata, url: nil)
