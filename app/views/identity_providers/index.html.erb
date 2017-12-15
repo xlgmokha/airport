@@ -5,7 +5,9 @@
       <table class="table">
         <thead>
           <tr>
+            <th></th>
             <th>Entity Id</th>
+            <th>Url</th>
             <th>Login</th>
             <th>Logout</th>
           </tr>
@@ -14,6 +16,15 @@
           <% @metadatum.each do |metadata| %>
             <tr>
               <td>
+                <%= form_with url: identity_provider_path(metadata), method: :patch do |form| %>
+                  <%= form.submit "Refresh" %>
+                <% end %>
+
+                <%= form_with url: identity_provider_path(metadata), method: :delete do |form| %>
+                  <%= form.submit "Delete" %>
+                <% end %>
+              </td>
+              <td>
                 <%= link_to metadata.entity_id, identity_provider_path(metadata) %>
                 <ul>
                   <% current_user(metadata.entity_id).attributes.each do |attribute| %>
@@ -21,6 +32,7 @@
                   <% end if current_user?(metadata.entity_id) %>
                 </ul>
               </td>
+              <td><%= metadata.url %></td>
               <td>
                 <% metadata.to_saml.single_sign_on_services.each do |service| %>
                   <%= form_with url: session_path, data: { remote: false } do |form| %>

@@ -10,11 +10,12 @@ class Metadatum < ApplicationRecord
   class << self
     def register_url(url, verify_ssl: true)
       content = Saml::Kit::DefaultRegistry::HttpApi.new(url, verify_ssl: verify_ssl).get
-      register(Saml::Kit::IdentityProviderMetadata.new(content))
+      register(Saml::Kit::IdentityProviderMetadata.new(content), url: url)
     end
 
-    def register(metadata)
+    def register(metadata, url: nil)
       record = Metadatum.find_or_create_by!(entity_id: metadata.entity_id)
+      record.url = url
       record.metadata = metadata.to_xml
       record.save!
       metadata

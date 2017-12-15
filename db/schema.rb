@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171123220807) do
+ActiveRecord::Schema.define(version: 20171215212829) do
 
   create_table "metadata", force: :cascade do |t|
     t.string "entity_id"
     t.text "metadata"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "url"
     t.index ["entity_id"], name: "index_metadata_on_entity_id", unique: true
   end
 

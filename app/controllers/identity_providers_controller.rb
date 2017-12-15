@@ -14,4 +14,16 @@ class IdentityProvidersController < ApplicationController
   def create
     Saml::Kit.registry.register_url(params[:url], verify_ssl: Rails.env.production?)
   end
+
+  def update
+    metadatum = Metadatum.find(params[:id])
+    Saml::Kit.registry.register_url(metadatum.url, verify_ssl: Rails.env.production?)
+    redirect_to identity_providers_path
+  end
+
+  def destroy
+    metadatum = Metadatum.find(params[:id])
+    metadatum.destroy!
+    redirect_to identity_providers_path
+  end
 end
