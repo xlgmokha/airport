@@ -6,6 +6,7 @@ class SessionsController < ApplicationController
   def create
     @uri, @saml_params = idp.login_request_for(binding: binding_type, relay_state: relay_state) do |builder|
       @saml_builder = builder
+      builder.issuer = params[:issuer] if params[:issuer].present?
       builder.assertion_consumer_service_url = callback_url
     end
   end
@@ -27,7 +28,7 @@ class SessionsController < ApplicationController
   end
 
   def relay_state
-    JSON.generate(redirect_to: '/')
+    JSON.generate(redirect_to: '/', issuer: params[:issuer])
   end
 
   def binding_type
