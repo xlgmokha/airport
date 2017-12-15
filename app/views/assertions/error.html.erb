@@ -7,6 +7,8 @@
           <li><%= message %></li>
         <% end %>
       </ul>
+
+      <%= debug @saml_response.try(:to_xml, pretty: true) %>
     </div>
   </div>
 </div>
