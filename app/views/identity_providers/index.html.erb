@@ -13,7 +13,7 @@
           </tr>
         </thead>
         <tbody>
-          <% @metadatum.each do |metadata| %>
+          <% @identity_providers.each do |metadata| %>
             <tr>
               <td>
                 <%= form_with url: identity_provider_path(metadata), method: :patch do |form| %>
@@ -37,6 +37,7 @@
                   <%= form_with url: session_path, data: { remote: false } do |form| %>
                     <%= form.hidden_field :entity_id, value: metadata.entity_id %>
                     <%= form.hidden_field :binding, value: Saml::Kit::Bindings.to_symbol(service.binding) %>
+                    <%= form.select :issuer, @service_providers.map { |x| [x.entity_id, x.entity_id] }, include_blank: true %>
                     <%= form.submit Saml::Kit::Bindings.to_symbol(service.binding).to_s.upcase %>
                   <% end %>
                 <% end %>
