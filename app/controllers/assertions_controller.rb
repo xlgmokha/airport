@@ -24,7 +24,7 @@ class AssertionsController < ApplicationController
   private
 
   def sp
-    if relay_state.present?
+    if relay_state[:issuer].present?
       Metadatum.find_by(entity_id: relay_state[:issuer]).to_saml
     else
       Sp.default(request)
