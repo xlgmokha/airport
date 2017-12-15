@@ -24,6 +24,18 @@ class AssertionsController < ApplicationController
   private
 
   def sp
-    Sp.default(request)
+    if relay_state.present?
+      Metadatum.find_by(entity_id: relay_state[:issuer]).to_saml
+    else
+      Sp.default(request)
+    end
+  end
+
+  def relay_state
+    @relay_state ||= if params[:RelayState].present?
+      JSON.parse(params[:RelayState]).with_indifferent_access
+    else
+      {}
+    end
   end
 end
