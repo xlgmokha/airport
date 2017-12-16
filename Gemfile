@@ -61,10 +61,6 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'dotenv-rails'
-if ENV['RAILS_ENV'] == 'development'
-  gem "saml-kit", path: '../saml-kit'
-else
-  gem "saml-kit", '~> 0.2.4'
-end
+gem "saml-kit", '0.2.7'
 gem "rails-assets-bootstrap", source: "https://rails-assets.org"
 gem "rails-assets-jquery", source: "https://rails-assets.org"
