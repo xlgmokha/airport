@@ -20,15 +20,15 @@ class SessionsController < ApplicationController
   private
 
   def idp(entity_id = params[:entity_id])
-    Saml::Kit.registry.metadata_for(params[:entity_id])
+    Saml::Kit.registry.metadata_for(entity_id)
   end
 
-  def sp
-    Sp.default(request)
+  def sp(issuer = params[:issuer])
+    Saml::Kit.registry.metadata_for(issuer) || Sp.default(request)
   end
 
   def relay_state
-    JSON.generate(redirect_to: '/', issuer: params[:issuer])
+    JSON.generate(redirect_to: '/', issuer: sp.entity_id)
   end
 
   def binding_type
