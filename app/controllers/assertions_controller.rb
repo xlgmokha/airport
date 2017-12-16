@@ -16,7 +16,7 @@ class AssertionsController < ApplicationController
     elsif params['SAMLResponse'].present?
       saml_binding = sp.single_logout_service_for(binding: :http_post)
       @saml_response = saml_binding.deserialize(params)
-      raise ActiveRecordRecordInvalid.new(@saml_response) if @saml_response.invalid?
+      raise ActiveRecord::RecordInvalid.new(@saml_response) if @saml_response.invalid?
       session[@saml_response.issuer] = nil
     end
   end
