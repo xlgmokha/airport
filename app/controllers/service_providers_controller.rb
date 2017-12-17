@@ -32,8 +32,10 @@ class ServiceProvidersController < ApplicationController
       builder.add_single_logout_service(logout_url, binding: :http_post)
     end
     ActiveRecord::Base.transaction do
-      metadatum = Metadatum.register(metadata)
-      metadatum = Metadatum.find_by!(entity_id: metadatum.entity_id)
+      metadatum = Metadatum.create!(
+        entity_id: metadata.entity_id,
+        metadata: metadata.to_xml
+      )
       configuration.key_pairs.each do |key_pair|
         metadatum.certificates.create!(
           pem: key_pair.certificate.x509.to_pem,
