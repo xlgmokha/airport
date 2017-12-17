@@ -6,7 +6,11 @@ class ServiceProvidersController < ApplicationController
   def show
     entity_id = service_provider_url(id: params[:id])
     xml = Metadatum.metadata_for(entity_id).to_xml
-    render xml: xml, content_type: "application/samlmetadata+xml"
+    if params[:view].present?
+      render xml: xml
+    else
+      render xml: xml, content_type: "application/samlmetadata+xml"
+    end
   end
 
   def new

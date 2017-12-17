@@ -14,8 +14,11 @@
         <tbody>
         <% @service_providers.each do |service_provider| %>
           <tr>
-            <td><%= button_to "delete", service_provider_path(service_provider), method: :delete %></td>
-            <td><%= link_to service_provider.entity_id, service_provider.entity_id %></td>
+            <td>
+              <%= button_to "delete", service_provider_path(service_provider), method: :delete %>
+              <%= button_to "download", service_provider.entity_id, method: :get %>
+            </td>
+            <td><%= link_to service_provider.entity_id, service_provider.entity_id + "?view=true" %></td>
             <td><%= service_provider.certificates.signing.count %></td>
             <td><%= service_provider.certificates.encryption.count %></td>
           </tr>
