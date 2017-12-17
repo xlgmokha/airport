@@ -8,12 +8,16 @@
         <thead>
           <th></th>
           <th>Entity Id</th>
+          <th>Signing Certificates</th>
+          <th>Encryption Certificates</th>
         </thead>
         <tbody>
         <% @service_providers.each do |service_provider| %>
           <tr>
             <td><%= button_to "delete", service_provider_path(service_provider), method: :delete %></td>
             <td><%= link_to service_provider.entity_id, service_provider.entity_id %></td>
+            <td><%= service_provider.certificates.signing.count %></td>
+            <td><%= service_provider.certificates.encryption.count %></td>
           </tr>
         <% end %>
         </tbody>
