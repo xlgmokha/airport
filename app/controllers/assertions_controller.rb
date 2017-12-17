@@ -15,7 +15,7 @@ class AssertionsController < ApplicationController
       # IDP initiated logout
     elsif params['SAMLResponse'].present?
       saml_binding = sp.single_logout_service_for(binding: :http_post)
-      @saml_response = saml_binding.deserialize(params)
+      @saml_response = saml_binding.deserialize(params, configuration: current_configuration)
       raise ActiveRecord::RecordInvalid.new(@saml_response) if @saml_response.invalid?
       session[@saml_response.issuer] = nil
     end
