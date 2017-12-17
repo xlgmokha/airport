@@ -1,9 +1,4 @@
 class IdentityProvidersController < ApplicationController
-  def index
-    @identity_providers = Metadatum.identity_providers.limit(10)
-    @service_providers = Metadatum.service_providers.limit(10)
-  end
-
   def show
     metadatum = Metadatum.find(params[:id])
     render xml: metadatum.to_xml
@@ -19,12 +14,12 @@ class IdentityProvidersController < ApplicationController
   def update
     metadatum = Metadatum.find(params[:id])
     Saml::Kit.registry.register_url(metadatum.url, verify_ssl: Rails.env.production?)
-    redirect_to identity_providers_path
+    redirect_to providers_path
   end
 
   def destroy
     metadatum = Metadatum.find(params[:id])
     metadatum.destroy!
-    redirect_to identity_providers_path
+    redirect_to providers_path
   end
 end

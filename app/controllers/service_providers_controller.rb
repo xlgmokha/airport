@@ -1,8 +1,4 @@
 class ServiceProvidersController < ApplicationController
-  def index
-    @service_providers = Metadatum.service_providers.limit(10)
-  end
-
   def show
     entity_id = service_provider_url(id: params[:id])
     xml = Metadatum.metadata_for(entity_id).to_xml
@@ -44,11 +40,11 @@ class ServiceProvidersController < ApplicationController
         )
       end
     end
-    redirect_to service_providers_path
+    redirect_to providers_path
   end
 
   def destroy
     Metadatum.find(params[:id]).destroy!
-    redirect_to service_providers_path
+    redirect_to providers_path
   end
 end
