@@ -3,7 +3,7 @@ class AssertionsController < ApplicationController
 
   def create
     saml_binding = sp.assertion_consumer_service_for(binding: :http_post)
-    @saml_response = saml_binding.deserialize(params)
+    @saml_response = saml_binding.deserialize(params, configuration: current_configuration)
     logger.debug(@saml_response.to_xml(pretty: true))
     return render :error, status: :forbidden if @saml_response.invalid?
 
@@ -24,18 +24,27 @@ class AssertionsController < ApplicationController
   private
 
   def sp
-    if relay_state[:issuer].present?
-      Metadatum.find_by(entity_id: relay_state[:issuer]).to_saml
+    default_sp = Sp.default(request)
+    if default_sp.entity_id == relay_state[:issuer]
+      default_sp
     else
-      Sp.default(request)
+      Metadatum.find_by(entity_id: relay_state[:issuer]).to_saml
     end
   end
 
   def relay_state
-    @relay_state ||= if params[:RelayState].present?
-      JSON.parse(params[:RelayState]).with_indifferent_access
+    if params[:RelayState].present?
+      JSON.parse(CGI.unescape(params[:RelayState])).with_indifferent_access
     else
       {}
+    end
+  end
+
+  def current_configuration
+    if sp == Sp.default(request)
+      Saml::Kit.configuration
+    else
+      Metadatum.find_by(entity_id: relay_state[:issuer]).configuration
     end
   end
 end

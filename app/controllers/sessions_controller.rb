@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    @uri, @saml_params = idp.login_request_for(binding: binding_type, relay_state: relay_state) do |builder|
+    @uri, @saml_params = idp.login_request_for(binding: binding_type, relay_state: relay_state, configuration: current_configuration) do |builder|
       @saml_builder = builder
       builder.issuer = params[:issuer] if params[:issuer].present?
       builder.assertion_consumer_service_url = callback_url
@@ -37,5 +37,13 @@ class SessionsController < ApplicationController
 
   def callback_url
     sp.assertion_consumer_service_for(binding: :http_post).location
+  end
+
+  def current_configuration
+    if sp == Sp.default(request)
+      Saml::Kit.configuration
+    else
+      Metadatum.find_by(entity_id: params[:issuer]).configuration
+    end
   end
 end

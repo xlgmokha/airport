@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171215212829) do
+ActiveRecord::Schema.define(version: 20171216200548) do
+
+  create_table "certificates", force: :cascade do |t|
+    t.integer "metadatum_id"
+    t.text "pem"
+    t.text "private_key_pem"
+    t.string "use"
+    t.index ["metadatum_id"], name: "index_certificates_on_metadatum_id"
+  end
 
   create_table "metadata", force: :cascade do |t|
     t.string "entity_id"

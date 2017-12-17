@@ -1,6 +1,7 @@
 class Metadatum < ApplicationRecord
   scope :service_providers, -> { where('metadata like ?', '%SPSSODescriptor%') }
   scope :identity_providers, -> { where('metadata like ?', '%IDPSSODescriptor%') }
+  has_many :certificates, dependent: :delete_all
 
   def to_xml
     metadata
@@ -8,6 +9,21 @@ class Metadatum < ApplicationRecord
 
   def to_saml
     Saml::Kit::Metadata.from(metadata)
+  end
+
+  def configuration
+    Saml::Kit::Configuration.new do |config|
+      config.issuer = entity_id
+      config.registry = Metadatum
+      certificates.each do |certificate|
+        config.add_key_pair(
+          certificate.pem,
+          certificate.private_key_pem,
+          password: nil,
+          use: certificate.use.to_sym,
+        )
+      end
+    end
   end
 
   class << self

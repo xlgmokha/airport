@@ -23,11 +23,21 @@ class ServiceProvidersController < ApplicationController
       end
     end
     metadata = Saml::Kit::ServiceProviderMetadata.build(configuration: configuration) do |builder|
-      builder.sign = false
+      builder.embed_signature = false
       builder.add_assertion_consumer_service(consume_url, binding: :http_post)
       builder.add_single_logout_service(logout_url, binding: :http_post)
     end
-    Metadatum.register(metadata)
+    ActiveRecord::Base.transaction do
+      metadatum = Metadatum.register(metadata)
+      metadatum = Metadatum.find_by!(entity_id: metadatum.entity_id)
+      configuration.key_pairs.each do |key_pair|
+        metadatum.certificates.create!(
+          pem: key_pair.certificate.x509.to_pem,
+          private_key_pem: key_pair.private_key.to_pem,
+          use: key_pair.certificate.use,
+        )
+      end
+    end
     redirect_to service_providers_path
   end
 
