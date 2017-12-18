@@ -28,7 +28,7 @@
                 <%= link_to metadata.entity_id, identity_provider_path(metadata) %>
                 <ul>
                   <% current_user(metadata.entity_id).attributes.each do |attribute| %>
-                    <li title="<%= attribute[1] %>"> <%= attribute[0] %> <%= attribute[1].truncate(32) %> </li>
+                    <li title="<%= attribute[1] %>"> <%= attribute[0] %> <%= attribute[1].try(:truncate, 32) %> </li>
                   <% end if current_user?(metadata.entity_id) %>
                 </ul>
               </td>
