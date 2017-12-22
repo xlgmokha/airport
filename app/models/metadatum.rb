@@ -19,7 +19,7 @@ class Metadatum < ApplicationRecord
         config.add_key_pair(
           certificate.pem,
           certificate.private_key_pem,
-          password: nil,
+          passphrase: nil,
           use: certificate.use.to_sym,
         )
       end
