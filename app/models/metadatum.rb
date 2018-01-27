@@ -13,7 +13,7 @@ class Metadatum < ApplicationRecord
 
   def configuration
     Saml::Kit::Configuration.new do |config|
-      config.issuer = entity_id
+      config.entity_id = entity_id
       config.registry = Metadatum
       certificates.each do |certificate|
         config.add_key_pair(
