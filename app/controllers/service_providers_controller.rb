@@ -14,7 +14,7 @@ class ServiceProvidersController < ApplicationController
 
   def create
     configuration = Saml::Kit::Configuration.new do |config|
-      config.issuer = service_provider_url(id: SecureRandom.uuid)
+      config.entity_id = service_provider_url(id: SecureRandom.uuid)
       params[:signing_certificates].to_i.times do |n|
         config.generate_key_pair_for(use: :signing)
       end
