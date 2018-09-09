@@ -28,7 +28,7 @@ class Metadatum < ApplicationRecord
 
   class << self
     def register_url(url, verify_ssl: true)
-      content = Saml::Kit::DefaultRegistry::HttpApi.new(url, verify_ssl: verify_ssl).get
+      content = Net::Hippie::Api.new(url, verify_none: !verify_ssl).get
       register(Saml::Kit::Metadata.from(content), url: url)
     end
 
