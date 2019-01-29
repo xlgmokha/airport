@@ -1,3 +1,17 @@
 #!/bin/sh
 
-bin/rails server
+# bin/server: Launch the application and any extra required processes locally.
+
+set -e
+cd "$(dirname "$0")/.."
+
+PORT=${PORT:=4000}
+PROCFILE=Procfile
+
+export PORT
+
+test -z "$RACK_ENV" && RACK_ENV='development'
+bin/update
+
+gem install foreman
+foreman start -e /dev/null -f $PROCFILE
