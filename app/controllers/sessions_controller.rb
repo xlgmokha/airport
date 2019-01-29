@@ -14,6 +14,7 @@ class SessionsController < ApplicationController
   def destroy
     @url, @saml_params = idp.logout_request_for(current_user, binding: :http_post, relay_state: relay_state) do |builder|
       @saml_builder = builder
+      builder.issuer = params[:issuer] if params[:issuer].present?
     end
   end
 
